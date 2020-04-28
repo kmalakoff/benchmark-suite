@@ -1,6 +1,6 @@
 {
   "name": "benchmark-suite",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A simple suite of benchmarking tests",
   "main": "index.js",
   "directories": {
@@ -19,8 +19,8 @@
   "keywords": [
     "benchmark",
     "performance",
-    "memory",
-    "operations",
+    "mem",
+    "ops",
     "speed",
     "test",
     "ops"
@@ -34,7 +34,6 @@
   "dependencies": {
     "eventemitter3": "^4.0.0",
     "expose-gc": "^1.0.0",
-    "heapdump": "^0.3.15",
     "human-format": "^0.10.1",
     "pify": "^5.0.0",
     "pretty-bytes": "^5.3.0",
