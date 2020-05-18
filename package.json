@@ -28,7 +28,7 @@
     "test": "mocha-compat test/spec/**/*.test.js"
   },
   "dependencies": {
-    "eventemitter3": "^4.0.1",
+    "eventemitter3": "^4.0.4",
     "expose-gc": "^1.0.0",
     "human-format": "^0.10.1",
     "pify": "^5.0.0",
@@ -46,10 +46,10 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "mocha-compat": "^3.5.5",
-    "nvs": "^0.3.0",
+    "nvs": "^0.4.0",
     "prettier": "^2.0.5"
   },
   "engines": {
-    "node": ">=6.0"
+    "node": ">=8.0"
   }
 }
