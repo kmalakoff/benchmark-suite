@@ -22,7 +22,7 @@
   "author": "Kevin Malakoff <kmalakoff@gmail.com> (https://github.com/kmalakoff)",
   "main": "index.js",
   "scripts": {
-    "format": "eslint . --fix",
+    "format": "prettier --write .",
     "lint": "eslint .",
     "test": "mocha-compat test/spec/**/*.test.js"
   },
@@ -30,13 +30,11 @@
     "eventemitter3": "^4.0.4",
     "expose-gc": "^1.0.0",
     "human-format": "^0.10.1",
-    "pify": "^5.0.0",
     "pretty-bytes": "^5.3.0",
     "stats-accumulator": "^1.1.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "chai": "^4.2.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
