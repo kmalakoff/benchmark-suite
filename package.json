@@ -30,7 +30,7 @@
   "dependencies": {
     "eventemitter3": "^4.0.4",
     "expose-gc": "^1.0.0",
-    "human-format": "^0.10.1",
+    "human-format": "^0.11.0",
     "pretty-bytes": "^5.3.0",
     "stats-accumulator": "^1.1.2"
   },
