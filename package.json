@@ -24,8 +24,9 @@
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint .",
-    "prepublishOnly": "dtd \"npm run lint\" \"depcheck\"",
-    "test": "mocha-compat test/spec/**/*.test.js"
+    "prepublishOnly": "npm run lint && depcheck",
+    "test": "mocha-compat test/spec/**/*.test.js",
+    "test:engines": "nvu engines npm test"
   },
   "dependencies": {
     "eventemitter3": "^4.0.7",
@@ -35,16 +36,14 @@
     "stats-accumulator": "^1.1.2"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
+    "@typescript-eslint/parser": "^5.30.7",
     "depcheck": "^1.4.3",
-    "dis-dat": "^0.1.3",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
+    "eslint": "^8.20.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-promise": "^6.0.0",
     "mocha-compat": "^3.5.5",
     "prettier": "^2.7.1"
   },
