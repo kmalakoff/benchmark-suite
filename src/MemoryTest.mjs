@@ -1,13 +1,13 @@
-var Stats = require('stats-accumulator');
 // var heapdump = require('heapdump');
 // const pify = require('pify');
-const gc = require('expose-gc/function');
-var humanize = require('pretty-bytes');
+import gc from 'expose-gc';
+import humanize from 'pretty-bytes';
+import Stats from 'stats-accumulator';
 
 // const writeSnapshot = pify(heapdump.writeSnapshot);
 const writeSnapshot = async () => {};
 
-module.exports = class MemoryTest {
+export default class MemoryTest {
   constructor(name, fn) {
     this.name = name;
     this.fn = fn;
@@ -39,7 +39,7 @@ module.exports = class MemoryTest {
       await this.fn(() => {});
       if (dump && !dumped) {
         dumped = true;
-        await writeSnapshot(`hd-calibrate.heapsnapshot`);
+        await writeSnapshot('hd-calibrate.heapsnapshot');
         gc();
       }
       gc();
@@ -91,7 +91,7 @@ module.exports = class MemoryTest {
   }
 
   static formatStats(stats) {
-    var memoryStdev = Math.sqrt(stats.variance / stats.mean) / 100;
+    const memoryStdev = Math.sqrt(stats.variance / stats.mean) / 100;
     return `${humanize(stats.mean)} ±${memoryStdev.toFixed(1)}% (${stats.n} runs sampled)`;
   }
-};
+}
