@@ -1,1 +1,1 @@
-ignores: ["depcheck"]
+ignores: ["benchmark-suite", "depcheck", "ts-dev-stack", "@types/*"]
