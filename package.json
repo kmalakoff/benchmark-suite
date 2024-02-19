@@ -1,6 +1,6 @@
 {
   "name": "benchmark-suite",
-  "version": "0.1.8",
+  "version": "1.0.0",
   "description": "A simple suite of benchmarking tests",
   "keywords": [
     "benchmark",
