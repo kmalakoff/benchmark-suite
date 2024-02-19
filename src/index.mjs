@@ -1,20 +1,25 @@
-var EventEmitter = require('eventemitter3');
+import EventEmitter from 'eventemitter3';
+import Memory from './MemoryTest.mjs';
+import Operations from './OperationsTest.mjs';
 
-var TESTS = {
-  Memory: require('./lib/MemoryTest'),
-  Operations: require('./lib/OperationsTest'),
+const TESTS = {
+  Memory,
+  Operations,
 };
 
 function toJSON(results) {
-  var json = {};
-  for (var key in results) {
+  const json = {};
+  for (const key in results) {
     json[key] = { name: results[key].name };
     json[key].stats = results[key].stats.toJSON();
   }
   return json;
 }
 
-module.exports = class Suite extends EventEmitter {
+export { default as MemoryTest } from './MemoryTest.mjs';
+export { default as OperationsTest } from './OperationsTest.mjs';
+
+export default class Suite extends EventEmitter {
   constructor(name, type) {
     super();
     this.name = name;
@@ -35,7 +40,7 @@ module.exports = class Suite extends EventEmitter {
 
     for (const test of this.tests) {
       const result = await test.run(options);
-      for (var key in result) {
+      for (const key in result) {
         if (!results[key] || this.Test.metric(results[key].stats) < this.Test.metric(result[key].stats)) results[key] = result[key];
       }
       this.emit('cycle', toJSON(result));
@@ -46,4 +51,4 @@ module.exports = class Suite extends EventEmitter {
   formatStats(result) {
     return this.Test.formatStats(result);
   }
-};
+}

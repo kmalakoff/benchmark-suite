@@ -1,7 +1,7 @@
-var Stats = require('stats-accumulator');
-var humanize = require('human-format');
+import humanize from 'human-format';
+import Stats from 'stats-accumulator';
 
-module.exports = class OperationsTest {
+export default class OperationsTest {
   constructor(name, fn) {
     this.name = name;
     this.fn = fn;
@@ -21,12 +21,12 @@ module.exports = class OperationsTest {
     return stats;
   }
 
-  async callibrate(options) {
+  async callibrate(_options) {
     await this.fn(() => {});
     await this.fn(() => {});
   }
 
-  async runOnce(options) {
+  async runOnce(_options) {
     const now = Date.now();
     await this.fn(() => {});
     return Date.now() - now;
@@ -37,8 +37,8 @@ module.exports = class OperationsTest {
   }
 
   static formatStats(stats) {
-    var ops = stats.n / stats.mean;
-    var opsStdev = stats.n / Math.sqrt(stats.variance / stats.mean) / 100;
+    const ops = stats.n / stats.mean;
+    const opsStdev = stats.n / Math.sqrt(stats.variance / stats.mean) / 100;
     return `${humanize(ops)} ops/s ±${opsStdev.toFixed(1)}% (${stats.n} runs sampled)`;
   }
-};
+}
