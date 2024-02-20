@@ -202,11 +202,11 @@ var MemoryTest = /*#__PURE__*/ function() {
                                 results = {
                                     end: {
                                         name: _this.name,
-                                        stats: (0, _statsaccumulator.default)()
+                                        stats: new _statsaccumulator.default()
                                     },
                                     delta: {
                                         name: _this.name,
-                                        stats: (0, _statsaccumulator.default)()
+                                        stats: new _statsaccumulator.default()
                                     }
                                 };
                                 _state.label = 2;
@@ -247,7 +247,7 @@ var MemoryTest = /*#__PURE__*/ function() {
                             case 0:
                                 dump = options.heapdumpTrigger && !options.heapdumped;
                                 dumped = false;
-                                stats = (0, _statsaccumulator.default)();
+                                stats = new _statsaccumulator.default();
                                 _state.label = 1;
                             case 1:
                                 if (!(stats.n < 5)) return [
@@ -278,7 +278,7 @@ var MemoryTest = /*#__PURE__*/ function() {
                             case 4:
                                 (0, _exposegc.default)();
                                 delta = process.memoryUsage().heapUsed - start;
-                                if (delta < 0) stats = (0, _statsaccumulator.default)();
+                                if (delta < 0) stats = new _statsaccumulator.default();
                                 else stats.update(delta);
                                 return [
                                     3,
@@ -304,7 +304,7 @@ var MemoryTest = /*#__PURE__*/ function() {
                         switch(_state.label){
                             case 0:
                                 now = Date.now();
-                                stats = (0, _statsaccumulator.default)();
+                                stats = new _statsaccumulator.default();
                                 _this.n++;
                                 dumped = false;
                                 dump = options.heapdumpTrigger && !options.heapdumped;

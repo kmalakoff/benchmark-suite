@@ -13,11 +13,11 @@ let MemoryTest = class MemoryTest {
         const results = {
             end: {
                 name: this.name,
-                stats: Stats()
+                stats: new Stats()
             },
             delta: {
                 name: this.name,
-                stats: Stats()
+                stats: new Stats()
             }
         };
         do {
@@ -30,7 +30,7 @@ let MemoryTest = class MemoryTest {
     async callibrate(options) {
         const dump = options.heapdumpTrigger && !options.heapdumped;
         let dumped = false;
-        let stats = Stats();
+        let stats = new Stats();
         while(stats.n < 5){
             gc();
             const start = process.memoryUsage().heapUsed;
@@ -42,13 +42,13 @@ let MemoryTest = class MemoryTest {
             }
             gc();
             const delta = process.memoryUsage().heapUsed - start;
-            if (delta < 0) stats = Stats();
+            if (delta < 0) stats = new Stats();
             else stats.update(delta);
         }
     }
     async runOnce(options = {}) {
         const now = Date.now();
-        const stats = Stats();
+        const stats = new Stats();
         this.n++;
         let dumped = false;
         const dump = options.heapdumpTrigger && !options.heapdumped;

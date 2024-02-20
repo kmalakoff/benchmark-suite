@@ -8,7 +8,7 @@ let OperationsTest = class OperationsTest {
         const stats = {
             end: {
                 name: this.name,
-                stats: Stats()
+                stats: new Stats()
             }
         };
         do {

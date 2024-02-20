@@ -186,7 +186,7 @@ var OperationsTest = /*#__PURE__*/ function() {
                                 stats = {
                                     end: {
                                         name: _this.name,
-                                        stats: (0, _statsaccumulator.default)()
+                                        stats: new _statsaccumulator.default()
                                     }
                                 };
                                 _state.label = 2;

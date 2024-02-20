@@ -17,7 +17,7 @@ export default class MemoryTest {
     const time = options.time;
     await this.callibrate(options);
     const startTime = Date.now();
-    const results = { end: { name: this.name, stats: Stats() }, delta: { name: this.name, stats: Stats() } };
+    const results = { end: { name: this.name, stats: new Stats() }, delta: { name: this.name, stats: new Stats() } };
 
     do {
       const run = await this.runOnce(options);
@@ -31,7 +31,7 @@ export default class MemoryTest {
   async callibrate(options) {
     const dump = options.heapdumpTrigger && !options.heapdumped;
     let dumped = false;
-    let stats = Stats();
+    let stats = new Stats();
 
     while (stats.n < 5) {
       gc();
@@ -44,14 +44,14 @@ export default class MemoryTest {
       }
       gc();
       const delta = process.memoryUsage().heapUsed - start;
-      if (delta < 0) stats = Stats();
+      if (delta < 0) stats = new Stats();
       else stats.update(delta);
     }
   }
 
   async runOnce(options = {}) {
     const now = Date.now();
-    const stats = Stats();
+    const stats = new Stats();
     this.n++;
 
     let dumped = false;
