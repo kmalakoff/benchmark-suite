@@ -11,7 +11,7 @@ export default class OperationsTest {
     const time = options.time;
     await this.callibrate(options);
     const startTime = Date.now();
-    const stats = { end: { name: this.name, stats: Stats() } };
+    const stats = { end: { name: this.name, stats: new Stats() } };
 
     do {
       const time = await this.runOnce(options);
