@@ -162,7 +162,7 @@ function _ts_generator(thisArg, body) {
     }
 }
 // const writeSnapshot = pify(heapdump.writeSnapshot);
-var writeSnapshot = function() {
+var writeSnapshot = /*#__PURE__*/ function() {
     var _ref = _async_to_generator(function() {
         return _ts_generator(this, function(_state) {
             return [
@@ -269,7 +269,7 @@ var MemoryTest = /*#__PURE__*/ function() {
                                 dumped = true;
                                 return [
                                     4,
-                                    writeSnapshot("hd-calibrate.heapsnapshot")
+                                    writeSnapshot('hd-calibrate.heapsnapshot')
                                 ];
                             case 3:
                                 _state.sent();

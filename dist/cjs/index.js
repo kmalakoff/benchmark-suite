@@ -57,6 +57,10 @@ function _async_to_generator(fn) {
         });
     };
 }
+function _call_super(_this, derived, args) {
+    derived = _get_prototype_of(derived);
+    return _possible_constructor_return(_this, _is_native_reflect_construct() ? Reflect.construct(derived, args || [], _get_prototype_of(_this).constructor) : derived.apply(_this, args));
+}
 function _class_call_check(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
         throw new TypeError("Cannot call a class as a function");
@@ -118,28 +122,12 @@ function _type_of(obj) {
     return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
 }
 function _is_native_reflect_construct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
     try {
-        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {}));
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-function _create_super(Derived) {
-    var hasNativeReflectConstruct = _is_native_reflect_construct();
-    return function _createSuperInternal() {
-        var Super = _get_prototype_of(Derived), result;
-        if (hasNativeReflectConstruct) {
-            var NewTarget = _get_prototype_of(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-        } else {
-            result = Super.apply(this, arguments);
-        }
-        return _possible_constructor_return(this, result);
-    };
+        var result = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {}));
+    } catch (_) {}
+    return (_is_native_reflect_construct = function() {
+        return !!result;
+    })();
 }
 function _ts_generator(thisArg, body) {
     var f, y, t, g, _ = {
@@ -253,13 +241,12 @@ function toJSON(results) {
 var Suite = /*#__PURE__*/ function(EventEmitter) {
     "use strict";
     _inherits(Suite, EventEmitter);
-    var _super = _create_super(Suite);
     function Suite(name, type) {
         _class_call_check(this, Suite);
         var _this;
-        _this = _super.call(this);
+        _this = _call_super(this, Suite);
         _this.name = name;
-        if (!type) throw new Error("Suite needs a test type");
+        if (!type) throw new Error('Suite needs a test type');
         _this.type = type;
         _this.Test = TESTS[_this.type];
         if (!_this.Test) throw new Error("Suite test type not recognized ".concat(type));
@@ -282,7 +269,7 @@ var Suite = /*#__PURE__*/ function(EventEmitter) {
                     return _ts_generator(this, function(_state) {
                         switch(_state.label){
                             case 0:
-                                if (!options.time) throw new Error("Missing time option");
+                                if (!options.time) throw new Error('Missing time option');
                                 results = {};
                                 _iteratorNormalCompletion = true, _didIteratorError = false, _iteratorError = undefined;
                                 _state.label = 1;
@@ -310,7 +297,7 @@ var Suite = /*#__PURE__*/ function(EventEmitter) {
                                 for(var key in result){
                                     if (!results[key] || _this.Test.metric(results[key].stats) < _this.Test.metric(result[key].stats)) results[key] = result[key];
                                 }
-                                _this.emit("cycle", toJSON(result));
+                                _this.emit('cycle', toJSON(result));
                                 _state.label = 4;
                             case 4:
                                 _iteratorNormalCompletion = true;
@@ -345,7 +332,7 @@ var Suite = /*#__PURE__*/ function(EventEmitter) {
                                     7
                                 ];
                             case 8:
-                                _this.emit("complete", toJSON(results));
+                                _this.emit('complete', toJSON(results));
                                 return [
                                     2
                                 ];
