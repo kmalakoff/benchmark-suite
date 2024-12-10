@@ -44,20 +44,6 @@ function _class_call_check(instance, Constructor) {
         throw new TypeError("Cannot call a class as a function");
     }
 }
-function _defineProperties(target, props) {
-    for(var i = 0; i < props.length; i++){
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-    }
-}
-function _create_class(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    return Constructor;
-}
 function _interop_require_default(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
@@ -165,125 +151,108 @@ var OperationsTest = /*#__PURE__*/ function() {
         this.name = name;
         this.fn = fn;
     }
-    _create_class(OperationsTest, [
-        {
-            key: "run",
-            value: function run(options) {
-                var _this = this;
-                return _async_to_generator(function() {
-                    var time, startTime, stats, time1;
-                    return _ts_generator(this, function(_state) {
-                        switch(_state.label){
-                            case 0:
-                                time = options.time;
-                                return [
-                                    4,
-                                    _this.callibrate(options)
-                                ];
-                            case 1:
-                                _state.sent();
-                                startTime = Date.now();
-                                stats = {
-                                    end: {
-                                        name: _this.name,
-                                        stats: new _statsaccumulator.default()
-                                    }
-                                };
-                                _state.label = 2;
-                            case 2:
-                                return [
-                                    4,
-                                    _this.runOnce(options)
-                                ];
-                            case 3:
-                                time1 = _state.sent();
-                                stats.end.stats.update(time1);
-                                _state.label = 4;
-                            case 4:
-                                if (Date.now() - startTime <= time) return [
-                                    3,
-                                    2
-                                ];
-                                _state.label = 5;
-                            case 5:
-                                return [
-                                    2,
-                                    stats
-                                ];
-                        }
-                    });
-                })();
-            }
-        },
-        {
-            key: "callibrate",
-            value: function callibrate(_options) {
-                var _this = this;
-                return _async_to_generator(function() {
-                    return _ts_generator(this, function(_state) {
-                        switch(_state.label){
-                            case 0:
-                                return [
-                                    4,
-                                    _this.fn(function() {})
-                                ];
-                            case 1:
-                                _state.sent();
-                                return [
-                                    4,
-                                    _this.fn(function() {})
-                                ];
-                            case 2:
-                                _state.sent();
-                                return [
-                                    2
-                                ];
-                        }
-                    });
-                })();
-            }
-        },
-        {
-            key: "runOnce",
-            value: function runOnce(_options) {
-                var _this = this;
-                return _async_to_generator(function() {
-                    var now;
-                    return _ts_generator(this, function(_state) {
-                        switch(_state.label){
-                            case 0:
-                                now = Date.now();
-                                return [
-                                    4,
-                                    _this.fn(function() {})
-                                ];
-                            case 1:
-                                _state.sent();
-                                return [
-                                    2,
-                                    Date.now() - now
-                                ];
-                        }
-                    });
-                })();
-            }
-        }
-    ], [
-        {
-            key: "metric",
-            value: function metric(stats) {
-                return stats.n / stats.mean;
-            }
-        },
-        {
-            key: "formatStats",
-            value: function formatStats(stats) {
-                var ops = stats.n / stats.mean;
-                var opsStdev = stats.n / Math.sqrt(stats.variance / stats.mean) / 100;
-                return "".concat((0, _humanformat.default)(ops), " ops/s \xb1").concat(opsStdev.toFixed(1), "% (").concat(stats.n, " runs sampled)");
-            }
-        }
-    ]);
+    var _proto = OperationsTest.prototype;
+    _proto.run = function run(options) {
+        var _this = this;
+        return _async_to_generator(function() {
+            var time, startTime, stats, time1;
+            return _ts_generator(this, function(_state) {
+                switch(_state.label){
+                    case 0:
+                        time = options.time;
+                        return [
+                            4,
+                            _this.callibrate(options)
+                        ];
+                    case 1:
+                        _state.sent();
+                        startTime = Date.now();
+                        stats = {
+                            end: {
+                                name: _this.name,
+                                stats: new _statsaccumulator.default()
+                            }
+                        };
+                        _state.label = 2;
+                    case 2:
+                        return [
+                            4,
+                            _this.runOnce(options)
+                        ];
+                    case 3:
+                        time1 = _state.sent();
+                        stats.end.stats.update(time1);
+                        _state.label = 4;
+                    case 4:
+                        if (Date.now() - startTime <= time) return [
+                            3,
+                            2
+                        ];
+                        _state.label = 5;
+                    case 5:
+                        return [
+                            2,
+                            stats
+                        ];
+                }
+            });
+        })();
+    };
+    _proto.callibrate = function callibrate(_options) {
+        var _this = this;
+        return _async_to_generator(function() {
+            return _ts_generator(this, function(_state) {
+                switch(_state.label){
+                    case 0:
+                        return [
+                            4,
+                            _this.fn(function() {})
+                        ];
+                    case 1:
+                        _state.sent();
+                        return [
+                            4,
+                            _this.fn(function() {})
+                        ];
+                    case 2:
+                        _state.sent();
+                        return [
+                            2
+                        ];
+                }
+            });
+        })();
+    };
+    _proto.runOnce = function runOnce(_options) {
+        var _this = this;
+        return _async_to_generator(function() {
+            var now;
+            return _ts_generator(this, function(_state) {
+                switch(_state.label){
+                    case 0:
+                        now = Date.now();
+                        return [
+                            4,
+                            _this.fn(function() {})
+                        ];
+                    case 1:
+                        _state.sent();
+                        return [
+                            2,
+                            Date.now() - now
+                        ];
+                }
+            });
+        })();
+    };
+    OperationsTest.metric = function metric(stats) {
+        return stats.n / stats.mean;
+    };
+    OperationsTest.formatStats = function formatStats(stats) {
+        var ops = stats.n / stats.mean;
+        var opsStdev = stats.n / Math.sqrt(stats.variance / stats.mean) / 100;
+        return "".concat((0, _humanformat.default)(ops), " ops/s \xb1").concat(opsStdev.toFixed(1), "% (").concat(stats.n, " runs sampled)");
+    };
     return OperationsTest;
 }();
-/* CJS INTEROP */ if (exports.__esModule && exports.default) { Object.defineProperty(exports.default, '__esModule', { value: true }); for (var key in exports) exports.default[key] = exports[key]; module.exports = exports.default; }
+/* CJS INTEROP */ if (exports.__esModule && exports.default) { try { Object.defineProperty(exports.default, '__esModule', { value: true }); for (var key in exports) { exports.default[key] = exports[key]; } } catch (_) {}; module.exports = exports.default; }
