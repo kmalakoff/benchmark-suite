@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: npm
     directory: '/'
     schedule:
-      interval: daily
+      interval: weekly
     ignore:
       - dependency-name: 'pretty-bytes'
   - package-ecosystem: 'github-actions'
