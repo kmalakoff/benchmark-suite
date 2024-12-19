@@ -47,20 +47,6 @@ function _class_call_check(instance, Constructor) {
         throw new TypeError("Cannot call a class as a function");
     }
 }
-function _defineProperties(target, props) {
-    for(var i = 0; i < props.length; i++){
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-    }
-}
-function _create_class(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    return Constructor;
-}
 function _interop_require_default(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
@@ -162,7 +148,7 @@ function _ts_generator(thisArg, body) {
     }
 }
 // const writeSnapshot = pify(heapdump.writeSnapshot);
-var writeSnapshot = function() {
+var writeSnapshot = /*#__PURE__*/ function() {
     var _ref = _async_to_generator(function() {
         return _ts_generator(this, function(_state) {
             return [
@@ -181,224 +167,207 @@ var MemoryTest = /*#__PURE__*/ function() {
         this.name = name;
         this.fn = fn;
     }
-    _create_class(MemoryTest, [
-        {
-            key: "run",
-            value: function run(options) {
-                var _this = this;
-                return _async_to_generator(function() {
-                    var time, startTime, results, run;
-                    return _ts_generator(this, function(_state) {
-                        switch(_state.label){
-                            case 0:
-                                time = options.time;
-                                return [
-                                    4,
-                                    _this.callibrate(options)
-                                ];
-                            case 1:
-                                _state.sent();
-                                startTime = Date.now();
-                                results = {
-                                    end: {
-                                        name: _this.name,
-                                        stats: new _statsaccumulator.default()
-                                    },
-                                    delta: {
-                                        name: _this.name,
-                                        stats: new _statsaccumulator.default()
+    var _proto = MemoryTest.prototype;
+    _proto.run = function run(options) {
+        var _this = this;
+        return _async_to_generator(function() {
+            var time, startTime, results, run;
+            return _ts_generator(this, function(_state) {
+                switch(_state.label){
+                    case 0:
+                        time = options.time;
+                        return [
+                            4,
+                            _this.callibrate(options)
+                        ];
+                    case 1:
+                        _state.sent();
+                        startTime = Date.now();
+                        results = {
+                            end: {
+                                name: _this.name,
+                                stats: new _statsaccumulator.default()
+                            },
+                            delta: {
+                                name: _this.name,
+                                stats: new _statsaccumulator.default()
+                            }
+                        };
+                        _state.label = 2;
+                    case 2:
+                        return [
+                            4,
+                            _this.runOnce(options)
+                        ];
+                    case 3:
+                        run = _state.sent();
+                        results.end.stats.update(run.end);
+                        results.delta.stats.update(run.delta.max);
+                        _state.label = 4;
+                    case 4:
+                        if (Date.now() - startTime <= time) return [
+                            3,
+                            2
+                        ];
+                        _state.label = 5;
+                    case 5:
+                        return [
+                            2,
+                            results
+                        ];
+                }
+            });
+        })();
+    };
+    _proto.callibrate = function callibrate(options) {
+        var _this = this;
+        return _async_to_generator(function() {
+            var dump, dumped, stats, start, delta;
+            return _ts_generator(this, function(_state) {
+                switch(_state.label){
+                    case 0:
+                        dump = options.heapdumpTrigger && !options.heapdumped;
+                        dumped = false;
+                        stats = new _statsaccumulator.default();
+                        _state.label = 1;
+                    case 1:
+                        if (!(stats.n < 5)) return [
+                            3,
+                            5
+                        ];
+                        (0, _exposegc.default)();
+                        start = process.memoryUsage().heapUsed;
+                        return [
+                            4,
+                            _this.fn(function() {})
+                        ];
+                    case 2:
+                        _state.sent();
+                        if (!(dump && !dumped)) return [
+                            3,
+                            4
+                        ];
+                        dumped = true;
+                        return [
+                            4,
+                            writeSnapshot('hd-calibrate.heapsnapshot')
+                        ];
+                    case 3:
+                        _state.sent();
+                        (0, _exposegc.default)();
+                        _state.label = 4;
+                    case 4:
+                        (0, _exposegc.default)();
+                        delta = process.memoryUsage().heapUsed - start;
+                        if (delta < 0) stats = new _statsaccumulator.default();
+                        else stats.update(delta);
+                        return [
+                            3,
+                            1
+                        ];
+                    case 5:
+                        return [
+                            2
+                        ];
+                }
+            });
+        })();
+    };
+    _proto.runOnce = function runOnce() {
+        var options = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
+        var _this = this;
+        return _async_to_generator(function() {
+            var now, stats, dumped, dump, start, delta;
+            return _ts_generator(this, function(_state) {
+                switch(_state.label){
+                    case 0:
+                        now = Date.now();
+                        stats = new _statsaccumulator.default();
+                        _this.n++;
+                        dumped = false;
+                        dump = options.heapdumpTrigger && !options.heapdumped;
+                        if (!dump) return [
+                            3,
+                            2
+                        ];
+                        return [
+                            4,
+                            writeSnapshot("hd-".concat(_this.name, "-").concat(now, "-start.heapsnapshot"))
+                        ];
+                    case 1:
+                        _state.sent();
+                        (0, _exposegc.default)();
+                        _state.label = 2;
+                    case 2:
+                        (0, _exposegc.default)();
+                        start = process.memoryUsage().heapUsed;
+                        return [
+                            4,
+                            _this.fn(/*#__PURE__*/ _async_to_generator(function() {
+                                var delta;
+                                return _ts_generator(this, function(_state) {
+                                    switch(_state.label){
+                                        case 0:
+                                            (0, _exposegc.default)();
+                                            delta = process.memoryUsage().heapUsed - start;
+                                            stats.update(delta);
+                                            if (!(dump && !dumped && delta > options.heapdumpTrigger)) return [
+                                                3,
+                                                2
+                                            ];
+                                            dumped = true;
+                                            options.heapdumped = true;
+                                            return [
+                                                4,
+                                                writeSnapshot("hd-".concat(_this.name, "-").concat(now, "-triggered.heapsnapshot"))
+                                            ];
+                                        case 1:
+                                            _state.sent();
+                                            (0, _exposegc.default)();
+                                            _state.label = 2;
+                                        case 2:
+                                            return [
+                                                2
+                                            ];
                                     }
-                                };
-                                _state.label = 2;
-                            case 2:
-                                return [
-                                    4,
-                                    _this.runOnce(options)
-                                ];
-                            case 3:
-                                run = _state.sent();
-                                results.end.stats.update(run.end);
-                                results.delta.stats.update(run.delta.max);
-                                _state.label = 4;
-                            case 4:
-                                if (Date.now() - startTime <= time) return [
-                                    3,
-                                    2
-                                ];
-                                _state.label = 5;
-                            case 5:
-                                return [
-                                    2,
-                                    results
-                                ];
-                        }
-                    });
-                })();
-            }
-        },
-        {
-            key: "callibrate",
-            value: function callibrate(options) {
-                var _this = this;
-                return _async_to_generator(function() {
-                    var dump, dumped, stats, start, delta;
-                    return _ts_generator(this, function(_state) {
-                        switch(_state.label){
-                            case 0:
-                                dump = options.heapdumpTrigger && !options.heapdumped;
-                                dumped = false;
-                                stats = new _statsaccumulator.default();
-                                _state.label = 1;
-                            case 1:
-                                if (!(stats.n < 5)) return [
-                                    3,
-                                    5
-                                ];
-                                (0, _exposegc.default)();
-                                start = process.memoryUsage().heapUsed;
-                                return [
-                                    4,
-                                    _this.fn(function() {})
-                                ];
-                            case 2:
-                                _state.sent();
-                                if (!(dump && !dumped)) return [
-                                    3,
-                                    4
-                                ];
-                                dumped = true;
-                                return [
-                                    4,
-                                    writeSnapshot("hd-calibrate.heapsnapshot")
-                                ];
-                            case 3:
-                                _state.sent();
-                                (0, _exposegc.default)();
-                                _state.label = 4;
-                            case 4:
-                                (0, _exposegc.default)();
-                                delta = process.memoryUsage().heapUsed - start;
-                                if (delta < 0) stats = new _statsaccumulator.default();
-                                else stats.update(delta);
-                                return [
-                                    3,
-                                    1
-                                ];
-                            case 5:
-                                return [
-                                    2
-                                ];
-                        }
-                    });
-                })();
-            }
-        },
-        {
-            key: "runOnce",
-            value: function runOnce() {
-                var options = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-                var _this = this;
-                return _async_to_generator(function() {
-                    var now, stats, dumped, dump, start, delta;
-                    return _ts_generator(this, function(_state) {
-                        switch(_state.label){
-                            case 0:
-                                now = Date.now();
-                                stats = new _statsaccumulator.default();
-                                _this.n++;
-                                dumped = false;
-                                dump = options.heapdumpTrigger && !options.heapdumped;
-                                if (!dump) return [
-                                    3,
-                                    2
-                                ];
-                                return [
-                                    4,
-                                    writeSnapshot("hd-".concat(_this.name, "-").concat(now, "-start.heapsnapshot"))
-                                ];
-                            case 1:
-                                _state.sent();
-                                (0, _exposegc.default)();
-                                _state.label = 2;
-                            case 2:
-                                (0, _exposegc.default)();
-                                start = process.memoryUsage().heapUsed;
-                                return [
-                                    4,
-                                    _this.fn(/*#__PURE__*/ _async_to_generator(function() {
-                                        var delta;
-                                        return _ts_generator(this, function(_state) {
-                                            switch(_state.label){
-                                                case 0:
-                                                    (0, _exposegc.default)();
-                                                    delta = process.memoryUsage().heapUsed - start;
-                                                    stats.update(delta);
-                                                    if (!(dump && !dumped && delta > options.heapdumpTrigger)) return [
-                                                        3,
-                                                        2
-                                                    ];
-                                                    dumped = true;
-                                                    options.heapdumped = true;
-                                                    return [
-                                                        4,
-                                                        writeSnapshot("hd-".concat(_this.name, "-").concat(now, "-triggered.heapsnapshot"))
-                                                    ];
-                                                case 1:
-                                                    _state.sent();
-                                                    (0, _exposegc.default)();
-                                                    _state.label = 2;
-                                                case 2:
-                                                    return [
-                                                        2
-                                                    ];
-                                            }
-                                        });
-                                    }))
-                                ];
-                            case 3:
-                                _state.sent();
-                                (0, _exposegc.default)();
-                                delta = process.memoryUsage().heapUsed - start;
-                                if (!dump) return [
-                                    3,
-                                    5
-                                ];
-                                return [
-                                    4,
-                                    writeSnapshot("hd-".concat(_this.name, "-").concat(now, "-end.heapsnapshot"))
-                                ];
-                            case 4:
-                                _state.sent();
-                                (0, _exposegc.default)();
-                                _state.label = 5;
-                            case 5:
-                                return [
-                                    2,
-                                    {
-                                        end: delta,
-                                        delta: stats
-                                    }
-                                ];
-                        }
-                    });
-                })();
-            }
-        }
-    ], [
-        {
-            key: "metric",
-            value: function metric(stats) {
-                return stats.mean;
-            }
-        },
-        {
-            key: "formatStats",
-            value: function formatStats(stats) {
-                var memoryStdev = Math.sqrt(stats.variance / stats.mean) / 100;
-                return "".concat((0, _prettybytes.default)(stats.mean), " \xb1").concat(memoryStdev.toFixed(1), "% (").concat(stats.n, " runs sampled)");
-            }
-        }
-    ]);
+                                });
+                            }))
+                        ];
+                    case 3:
+                        _state.sent();
+                        (0, _exposegc.default)();
+                        delta = process.memoryUsage().heapUsed - start;
+                        if (!dump) return [
+                            3,
+                            5
+                        ];
+                        return [
+                            4,
+                            writeSnapshot("hd-".concat(_this.name, "-").concat(now, "-end.heapsnapshot"))
+                        ];
+                    case 4:
+                        _state.sent();
+                        (0, _exposegc.default)();
+                        _state.label = 5;
+                    case 5:
+                        return [
+                            2,
+                            {
+                                end: delta,
+                                delta: stats
+                            }
+                        ];
+                }
+            });
+        })();
+    };
+    MemoryTest.metric = function metric(stats) {
+        return stats.mean;
+    };
+    MemoryTest.formatStats = function formatStats(stats) {
+        var memoryStdev = Math.sqrt(stats.variance / stats.mean) / 100;
+        return "".concat((0, _prettybytes.default)(stats.mean), " \xb1").concat(memoryStdev.toFixed(1), "% (").concat(stats.n, " runs sampled)");
+    };
     return MemoryTest;
 }();
-/* CJS INTEROP */ if (exports.__esModule && exports.default) { Object.defineProperty(exports.default, '__esModule', { value: true }); for (var key in exports) exports.default[key] = exports[key]; module.exports = exports.default; }
+/* CJS INTEROP */ if (exports.__esModule && exports.default) { try { Object.defineProperty(exports.default, '__esModule', { value: true }); for (var key in exports) { exports.default[key] = exports[key]; } } catch (_) {}; module.exports = exports.default; }
