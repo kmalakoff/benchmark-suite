@@ -9,7 +9,8 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
-    "allowJs": true
+    "allowJs": true,
+    "skipLibCheck": true
   },
   "exclude": ["node_modules", "dist", "test/data"],
   "include": ["src", "test"]
