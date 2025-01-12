@@ -22,12 +22,9 @@
   "author": "Kevin Malakoff <kmalakoff@gmail.com> (https://github.com/kmalakoff)",
   "type": "module",
   "exports": {
-    ".": {
-      "import": "./dist/esm/index.mjs",
-      "require": "./dist/cjs/index.cjs",
-      "types": "./dist/types/index.d.ts"
-    },
-    "./*": "./*"
+    "import": "./dist/esm/index.mjs",
+    "require": "./dist/cjs/index.cjs",
+    "types": "./dist/types/index.d.ts"
   },
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
@@ -37,9 +34,6 @@
   ],
   "scripts": {
     "build": "tsds build",
-    "clean": "node -e \"const dir = require('path').join(require('homedir-polyfill')(), '.im'); try {require('fs').rmdirSync(dir, {recursive: true})} catch(err) {}\"",
-    "deploy": "tsds deploy",
-    "docs": "tsds docs",
     "format": "biome check --write --unsafe src/ test/",
     "test": "tsds test:node --no-timeouts",
     "test:engines": "nvu engines npm test",
@@ -50,7 +44,7 @@
     "expose-gc": "^1.0.0",
     "human-format": "^1.2.1",
     "pretty-bytes": "^5.6.0",
-    "stats-accumulator": "^1.2.8"
+    "stats-accumulator": "^1.2.9"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
