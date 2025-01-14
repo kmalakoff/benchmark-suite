@@ -1,4 +1,4 @@
 {
   "upgrade": true,
-  "reject": ["pretty-bytes"]
+  "reject": ["@types/*", "biomejs/*", "pretty-bytes"]
 }
