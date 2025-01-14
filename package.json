@@ -44,12 +44,12 @@
     "expose-gc": "^1.0.0",
     "human-format": "^1.2.1",
     "pretty-bytes": "^5.6.0",
-    "stats-accumulator": "^1.2.9"
+    "stats-accumulator": "^1.2.10"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^22.10.5"
+    "@types/node": "^22.10.6"
   },
   "engines": {
     "node": ">=8"
