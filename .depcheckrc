@@ -1,1 +1,1 @@
-ignores: ["@types/*", "benchmark-suite", "@biomejs/*"]
+ignores: ["benchmark-suite"]

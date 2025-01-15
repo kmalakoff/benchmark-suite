@@ -21,7 +21,7 @@ jobs:
       - run: git config --global user.email "actions@users.noreply.github.com"
       # - run: npm install ts-dev-stack node-version-use -g --force
       - run: git config --global user.email "actions@users.noreply.github.com"
-      - run: npm install ts-dev-stack node-version-use depcheck -g -f
+      - run: npm install ts-dev-stack node-version-use depcheck @biomejs/biome -g -f
       - run: depcheck
       - run: npm ci
       - run: npm run build
