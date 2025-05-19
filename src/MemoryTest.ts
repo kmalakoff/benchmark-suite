@@ -4,11 +4,17 @@ import gc from 'expose-gc';
 import humanize from 'pretty-bytes';
 import Stats from 'stats-accumulator';
 
+import type { HeapdumpOptions, TestFn } from './types.js';
+
 // const writeSnapshot = pify(heapdump.writeSnapshot);
-const writeSnapshot = async () => {};
+const writeSnapshot = async (_name: string) => {};
 
 export default class MemoryTest {
-  constructor(name, fn) {
+  name: string;
+  fn: TestFn;
+  n: number;
+
+  constructor(name: string, fn: TestFn) {
     this.name = name;
     this.fn = fn;
   }
@@ -49,7 +55,7 @@ export default class MemoryTest {
     }
   }
 
-  async runOnce(options = {}) {
+  async runOnce(options: HeapdumpOptions = {}) {
     const now = Date.now();
     const stats = new Stats();
     this.n++;
