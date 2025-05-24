@@ -21,12 +21,13 @@ export { default as MemoryTest } from './MemoryTest.js';
 export { default as OperationsTest } from './OperationsTest.js';
 
 export type TestType = 'Memory' | 'Operations';
+export type Test = Memory | Operations;
 
 export default class Suite extends EventEmitter {
   name: string;
   type: TestType;
   Test: typeof Memory | typeof Operations;
-  tests: Array<Memory | Operations>;
+  tests: Test[];
 
   constructor(name: string, type: TestType) {
     super();
