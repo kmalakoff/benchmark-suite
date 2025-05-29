@@ -1,7 +1,7 @@
 import humanize from 'human-format';
 import Stats from 'stats-accumulator';
 
-import type { TestFn } from './types.js';
+import type { RunOptions, RunResult, TestFn } from './types.js';
 
 export default class OperationsTest {
   name: string;
@@ -12,7 +12,7 @@ export default class OperationsTest {
     this.fn = fn;
   }
 
-  async run(options) {
+  async run(options: RunOptions = {}): Promise<RunResult> {
     const time = options.time;
     await this.callibrate(options);
     const startTime = Date.now();
@@ -26,24 +26,24 @@ export default class OperationsTest {
     return stats;
   }
 
-  async callibrate(_options) {
+  async callibrate(_options: RunOptions): Promise<void> {
     await this.fn(() => {});
     await this.fn(() => {});
   }
 
-  async runOnce(_options) {
+  async runOnce(_options: RunOptions = {}): Promise<number> {
     const now = Date.now();
     await this.fn(() => {});
     return Date.now() - now;
   }
 
-  static metric(stats) {
+  metric(stats: Stats): number {
     return stats.n / stats.mean;
   }
 
-  static formatStats(stats) {
+  formatStats(stats: Stats): string {
     const ops = stats.n / stats.mean;
-    const opsStdev = stats.n / Math.sqrt(stats.variance / stats.mean) / 100;
+    const opsStdev = stats.n / Math.sqrt(stats.variance() / stats.mean) / 100;
     return `${humanize(ops)} ops/s ±${opsStdev.toFixed(1)}% (${stats.n} runs sampled)`;
   }
 }
