@@ -4,7 +4,7 @@ import gc from 'expose-gc';
 import humanize from 'pretty-bytes';
 import Stats from 'stats-accumulator';
 
-import type { HeapdumpOptions, TestFn } from './types.js';
+import type { MemoryRunOnceResult, RunOptions, RunResult, TestFn } from './types.js';
 
 // const writeSnapshot = pify(heapdump.writeSnapshot);
 const writeSnapshot = async (_name: string) => {};
@@ -19,11 +19,11 @@ export default class MemoryTest {
     this.fn = fn;
   }
 
-  async run(options) {
+  async run(options: RunOptions = {}): Promise<RunResult> {
     const time = options.time;
     await this.callibrate(options);
     const startTime = Date.now();
-    const results = { end: { name: this.name, stats: new Stats() }, delta: { name: this.name, stats: new Stats() } };
+    const results: RunResult = { end: { name: this.name, stats: new Stats() }, delta: { name: this.name, stats: new Stats() } };
 
     do {
       const run = await this.runOnce(options);
@@ -34,7 +34,7 @@ export default class MemoryTest {
     return results;
   }
 
-  async callibrate(options) {
+  async callibrate(options: RunOptions): Promise<void> {
     const dump = options.heapdumpTrigger && !options.heapdumped;
     let dumped = false;
     let stats = new Stats();
@@ -55,7 +55,7 @@ export default class MemoryTest {
     }
   }
 
-  async runOnce(options: HeapdumpOptions = {}) {
+  async runOnce(options: RunOptions = {}): Promise<MemoryRunOnceResult> {
     const now = Date.now();
     const stats = new Stats();
     this.n++;
@@ -92,12 +92,12 @@ export default class MemoryTest {
     return { end: delta, delta: stats };
   }
 
-  static metric(stats) {
+  metric(stats: Stats) {
     return stats.mean;
   }
 
-  static formatStats(stats) {
-    const memoryStdev = Math.sqrt(stats.variance / stats.mean) / 100;
+  formatStats(stats: Stats) {
+    const memoryStdev = Math.sqrt(stats.variance() / stats.mean) / 100;
     return `${humanize(stats.mean)} ±${memoryStdev.toFixed(1)}% (${stats.n} runs sampled)`;
   }
 }
