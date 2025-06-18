@@ -4,9 +4,9 @@ import Memory from './MemoryTest.js';
 import Operations from './OperationsTest.js';
 import type { RunOptions, RunResult, Test, TestFn } from './types.js';
 
-export * from './types.js';
 export { default as MemoryTest } from './MemoryTest.js';
 export { default as OperationsTest } from './OperationsTest.js';
+export * from './types.js';
 
 export type TestType = 'Memory' | 'Operations';
 
