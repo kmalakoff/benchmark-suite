@@ -4,7 +4,7 @@ import gc from 'expose-gc';
 import humanize from 'pretty-bytes';
 import Stats from 'stats-accumulator';
 
-import type { MemoryRunOnceResult, RunOptions, RunResult, TestFn } from './types.js';
+import type { MemoryRunOnceResult, RunOptions, RunResult, TestFn } from './types.ts';
 
 // const writeSnapshot = pify(heapdump.writeSnapshot);
 const writeSnapshot = async (_name: string) => {};
