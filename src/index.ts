@@ -1,12 +1,12 @@
 import EventEmitter from 'eventemitter3';
 import type Stats from 'stats-accumulator';
-import Memory from './MemoryTest.js';
-import Operations from './OperationsTest.js';
-import type { RunOptions, RunResult, Test, TestFn } from './types.js';
+import Memory from './MemoryTest.ts';
+import Operations from './OperationsTest.ts';
+import type { RunOptions, RunResult, Test, TestFn } from './types.ts';
 
-export { default as MemoryTest } from './MemoryTest.js';
-export { default as OperationsTest } from './OperationsTest.js';
-export * from './types.js';
+export { default as MemoryTest } from './MemoryTest.ts';
+export { default as OperationsTest } from './OperationsTest.ts';
+export * from './types.ts';
 
 export type TestType = 'Memory' | 'Operations';
 

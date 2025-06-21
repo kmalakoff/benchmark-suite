@@ -1,7 +1,7 @@
 import humanize from 'human-format';
 import Stats from 'stats-accumulator';
 
-import type { RunOptions, RunResult, TestFn } from './types.js';
+import type { RunOptions, RunResult, TestFn } from './types.ts';
 
 export default class OperationsTest {
   name: string;
