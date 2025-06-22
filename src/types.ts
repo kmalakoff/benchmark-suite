@@ -6,9 +6,7 @@ export interface RunOptions {
   heapdumped?: boolean;
 }
 
-export interface RunResult {
-  [key: string]: { name: string; stats: Stats };
-}
+export type RunResult = Record<string, { name: string; stats: Stats }>;
 export interface MemoryRunOnceResult {
   end: number;
   delta: Stats;

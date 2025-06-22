@@ -10,7 +10,7 @@ export * from './types.ts';
 
 export type TestType = 'Memory' | 'Operations';
 
-const TESTS: { [key: string]: Test } = {
+const TESTS: Record<string, Test> = {
   Memory: Memory as unknown as Test,
   Operations: Operations as unknown as Test,
 };
