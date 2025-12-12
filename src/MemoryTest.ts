@@ -1,4 +1,4 @@
-// var heapdump = require('heapdump');
+// let heapdump = require('heapdump');
 // const pify = require('pify');
 import gc from 'expose-gc';
 import humanize from 'pretty-bytes';
