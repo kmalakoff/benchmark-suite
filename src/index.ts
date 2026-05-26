@@ -15,15 +15,14 @@ const TESTS: Record<string, Test> = {
   Operations: Operations as unknown as Test,
 };
 
-const toJSON = (results) => {
-  const json = {};
+const toJSON = (results: RunResult): Record<string, unknown> => {
+  const json: Record<string, unknown> = {};
   for (const key in results) {
-    json[key] = { name: results[key].name };
-    json[key].stats = results[key].stats.toJSON();
+    json[key] = { name: results[key].name, stats: results[key].stats.toJSON() };
   }
   return json;
 };
-const isString = (x) => Object.prototype.toString.call(x) === '[object String]';
+const isString = (x: unknown) => Object.prototype.toString.call(x) === '[object String]';
 
 export default class Suite extends EventEmitter {
   name: string;
@@ -48,12 +47,14 @@ export default class Suite extends EventEmitter {
 
   async run(options: RunOptions = {}): Promise<RunResult> {
     if (!options.time) throw new Error('Missing time option');
-    const results = {};
+    const results: RunResult = {};
 
     for (const test of this.tests) {
       const result = await test.run(options);
       for (const key in result) {
-        if (!results[key] || test.metric(results[key].stats) < test.metric(result[key].stats)) results[key] = result[key];
+        const existing = results[key];
+        const entry = result[key];
+        if (entry && (!existing || test.metric(existing.stats) < test.metric(entry.stats))) results[key] = entry;
       }
       this.emit('cycle', toJSON(result));
     }

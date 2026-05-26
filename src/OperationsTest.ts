@@ -13,7 +13,7 @@ export default class OperationsTest {
   }
 
   async run(options: RunOptions = {}): Promise<RunResult> {
-    const time = options.time;
+    const time = options.time ?? 0;
     await this.callibrate(options);
     const startTime = Date.now();
     const stats = { end: { name: this.name, stats: new Stats() } };
