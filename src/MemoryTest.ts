@@ -12,7 +12,7 @@ const writeSnapshot = async (_name: string) => {};
 export default class MemoryTest {
   name: string;
   fn: TestFn;
-  n: number;
+  n = 0;
 
   constructor(name: string, fn: TestFn) {
     this.name = name;
@@ -20,7 +20,7 @@ export default class MemoryTest {
   }
 
   async run(options: RunOptions = {}): Promise<RunResult> {
-    const time = options.time;
+    const time = options.time ?? 0;
     await this.callibrate(options);
     const startTime = Date.now();
     const results: RunResult = { end: { name: this.name, stats: new Stats() }, delta: { name: this.name, stats: new Stats() } };
@@ -74,7 +74,7 @@ export default class MemoryTest {
       gc();
       const delta = process.memoryUsage().heapUsed - start;
       stats.update(delta);
-      if (dump && !dumped && delta > options.heapdumpTrigger) {
+      if (dump && !dumped && delta > (options.heapdumpTrigger ?? 0)) {
         dumped = true;
         options.heapdumped = true;
         await writeSnapshot(`hd-${this.name}-${now}-triggered.heapsnapshot`);
