@@ -1,6 +1,6 @@
 {
   "name": "benchmark-suite",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple suite of benchmarking tests",
   "main": "index.js",
   "directories": {
