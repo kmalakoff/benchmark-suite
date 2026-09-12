@@ -1,1 +1,1 @@
-ignores: ["node-version-use", "ts-dev-stack", "benchmark-suite"]
+ignores: ["benchmark-suite", "node-version-use", "ts-dev-stack"]
