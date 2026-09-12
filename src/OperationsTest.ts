@@ -1,8 +1,13 @@
 import humanize from 'human-format';
 import Stats from 'stats-accumulator';
 
+import type { TestFn } from './types.js';
+
 export default class OperationsTest {
-  constructor(name, fn) {
+  name: string;
+  fn: TestFn;
+
+  constructor(name: string, fn: TestFn) {
     this.name = name;
     this.fn = fn;
   }
