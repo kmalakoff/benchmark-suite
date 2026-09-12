@@ -1,6 +1,7 @@
 import EventEmitter from 'eventemitter3';
-import Memory from './MemoryTest.mjs';
-import Operations from './OperationsTest.mjs';
+import Memory from './MemoryTest.js';
+import Operations from './OperationsTest.js';
+export * from './types.js';
 
 const TESTS = {
   Memory,
@@ -16,11 +17,18 @@ function toJSON(results) {
   return json;
 }
 
-export { default as MemoryTest } from './MemoryTest.mjs';
-export { default as OperationsTest } from './OperationsTest.mjs';
+export { default as MemoryTest } from './MemoryTest.js';
+export { default as OperationsTest } from './OperationsTest.js';
+
+export type TestType = 'Memory' | 'Operations';
 
 export default class Suite extends EventEmitter {
-  constructor(name, type) {
+  name: string;
+  type: TestType;
+  Test: typeof Memory | typeof Operations;
+  tests: Array<Memory | Operations>;
+
+  constructor(name: string, type: TestType) {
     super();
     this.name = name;
     if (!type) throw new Error('Suite needs a test type');
