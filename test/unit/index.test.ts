@@ -1,6 +1,5 @@
-const assert = require('assert');
-
-const BenchmarkSuite = require('benchmark-suite');
+import assert from 'assert';
+import BenchmarkSuite from 'benchmark-suite';
 
 describe('async await', () => {
   describe('Memory', () => {
@@ -9,7 +8,7 @@ describe('async await', () => {
       let completes = 0;
 
       const suite = new BenchmarkSuite('Suite Name', 'Memory');
-      suite.add('Test 1', (fn) => {
+      suite.add('Test 1', (fn: () => void) => {
         for (let i = 0; i < 100; i++) {
           const array = new Array(100);
           array.reverse();
@@ -18,11 +17,11 @@ describe('async await', () => {
         fn();
       });
 
-      suite.on('cycle', (results) => {
+      suite.on('cycle', (results: unknown) => {
         assert.ok(results);
         cycles++;
       });
-      suite.on('complete', (results) => {
+      suite.on('complete', (results: unknown) => {
         assert.ok(results);
         completes++;
       });
@@ -39,7 +38,7 @@ describe('async await', () => {
       let completes = 0;
 
       const suite = new BenchmarkSuite('Suite Name', 'Operations');
-      suite.add('Test 1', (fn) => {
+      suite.add('Test 1', (fn: () => void) => {
         for (let i = 0; i < 100; i++) {
           const array = new Array(100);
           array.reverse();
@@ -48,11 +47,11 @@ describe('async await', () => {
         fn();
       });
 
-      suite.on('cycle', (results) => {
+      suite.on('cycle', (results: unknown) => {
         assert.ok(results);
         cycles++;
       });
-      suite.on('complete', (results) => {
+      suite.on('complete', (results: unknown) => {
         assert.ok(results);
         completes++;
       });
