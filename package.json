@@ -44,7 +44,7 @@
     "expose-gc": "^1.0.0",
     "human-format": "^1.2.1",
     "pretty-bytes": "^5.6.0",
-    "stats-accumulator": "^1.2.12"
+    "stats-accumulator": "^1.2.13"
   },
   "devDependencies": {
     "@types/mocha": "*",
