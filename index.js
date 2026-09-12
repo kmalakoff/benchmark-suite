@@ -5,6 +5,15 @@ var TESTS = {
   Operations: require('./lib/OperationsTest'),
 };
 
+function toJSON(results) {
+  var json = {};
+  for (var key in results) {
+    json[key] = { name: results[key].name };
+    json[key].stats = results[key].stats.toJSON();
+  }
+  return json;
+}
+
 module.exports = class Suite extends EventEmitter {
   constructor(name, type) {
     super();
@@ -29,9 +38,9 @@ module.exports = class Suite extends EventEmitter {
       for (var key in result) {
         if (!results[key] || this.Test.metric(results[key].stats) < this.Test.metric(result[key].stats)) results[key] = result[key];
       }
-      this.emit('cycle', result);
+      this.emit('cycle', toJSON(result));
     }
-    this.emit('complete', results);
+    this.emit('complete', toJSON(results));
   }
 
   formatStats(result) {
